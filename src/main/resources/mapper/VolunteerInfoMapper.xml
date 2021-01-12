@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyc.volunteer.dao.VolunteerInfoDao">
+
+    <resultMap id="BaseResultMap" type="com.jyc.volunteer.entity.VolunteerInfo">
+        <!--@Table income_info-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="INTEGER"/>
+        <result property="birthday" column="birthday" jdbcType="VARCHAR"/>
+        <result property="occupation" column="occupation" jdbcType="VARCHAR"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultType="VolunteerInfo">
+        select id,name,phone,gender,birthday,occupation,education
+        from volunteer.volunteer_info
+        where id = #{id}
+    </select>
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into  volunteer.volunteer_info(name, phone, gender,birthday,occupation,education)
+        values (#{name}, #{phone}, #{gender},#{birthday},#{occupation},#{education})
+    </insert>
+        <delete id="deleteById">
+            delete from volunteer.volunteer_info where id = #{id}
+        </delete>
+        <update id="update">
+            update volunteer.volunteer_info
+            <set>
+                <if test="name != null and name != ''">
+                    name = #{name},
+                </if>
+                <if test="phone != null and phone != ''">
+                    phone = #{phone},
+                </if>
+                <if test="gender != null and gender != ''">
+                    gender = #{gender},
+                </if>
+                <if test="birthday != null and birthday != ''">
+                    birthday = #{birthday},
+                </if>
+                <if test="occupation != null and occupation != ''">
+                    occupation = #{occupation},
+                </if>
+                <if test="education != null and education != ''">
+                    education = #{education},
+                </if>
+            </set>
+            where id = #{id}
+        </update>
+    <!--根据年龄段来查找-->
+    <select id="queryByBirthday" resultType="java.util.List">
+        select *
+        from volunteer.volunteer_info
+        where birthday between #{startTime} AND #{endTime}
+    </select>
+    <!--根据职业来查找-->
+    <select id="queryByOccupation" resultType="java.util.List">
+        select *
+        from volunteer.volunteer_info
+        where occupation = #{occupation}
+    </select>
+    <!--根据文化程度来查找-->
+    <select id="queryByEducation" resultType="java.util.List">
+        select *
+        from volunteer.volunteer_info
+        where education = #{education}
+    </select>
+<!--    &lt;!&ndash;查询指定行数据&ndash;&gt;-->
+<!--    <select id="queryAllByLimit" resultMap="BaseResultMap">-->
+<!--        select-->
+<!--          id, name, type, income-->
+<!--        from test.income_info-->
+<!--        limit #{offset}, #{limit}-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash;通过实体作为筛选条件查询&ndash;&gt;-->
+<!--    <select id="queryAll" resultMap="BaseResultMap">-->
+<!--        select-->
+<!--          id, name, type, income-->
+<!--        from test.income_info-->
+<!--        <where>-->
+<!--            <if test="id != null">-->
+<!--                and id = #{id}-->
+<!--            </if>-->
+<!--            <if test="name != null and name != ''">-->
+<!--                and name = #{name}-->
+<!--            </if>-->
+<!--            <if test="type != null and type != ''">-->
+<!--                and type = #{type}-->
+<!--            </if>-->
+<!--            <if test="income != null and income != ''">-->
+<!--                and income = #{income}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+
+
+
+<!--    &lt;!&ndash;通过主键修改数据&ndash;&gt;-->
+
+
+<!--    &lt;!&ndash;通过主键删除&ndash;&gt;-->
+
+
+</mapper>

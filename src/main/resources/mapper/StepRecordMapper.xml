@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyc.volunteer.dao.StepRecordDao">
+
+    <resultMap id="BaseResultMap" type="com.jyc.volunteer.entity.StepRecord">
+        <!--@Table income_info-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="oldManId" column="old_man_id" jdbcType="INTEGER"/>
+        <result property="time" column="time" jdbcType="VARCHAR"/>
+        <result property="steps" column="steps" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="queryByOldManId" resultType="java.util.List">
+        select * from volunteer.step_record
+        where old_man_id = #{oldManId} ORDER BY time;
+    </select>
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into volunteer.step_record(old_man_id,time,steps)
+        values(#{old_man_id},#{time},#{steps})
+    </insert>
+
+
+</mapper>
